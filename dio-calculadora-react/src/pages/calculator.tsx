@@ -4,18 +4,28 @@ import { Input } from "../components/input";
 
 export function Calculator() {
   const [currentNumber, setCurrentNumber] = useState("0");
+  const [isResult, setIsResult] = useState(false);
 
   const handleAddNumberText = (number: string) => {
-    setCurrentNumber((prev) => (prev === "0" ? number : prev + number));
+    if (isResult && !isNaN(Number(number))) {
+      setCurrentNumber(number);
+    } else {
+      setCurrentNumber((prev) => (prev === "0" ? number : prev + number));
+    }
+    setIsResult(false);
   };
 
   const handleOnClear = () => {
     setCurrentNumber("0");
+    setIsResult(false);
   };
 
   const handleCalculate = () => {
     const result = eval(currentNumber.replace("^", "**"));
-    setCurrentNumber(result.toString());
+    setCurrentNumber(
+      result === Infinity ? "Can't divide a number by 0" : result.toString()
+    );
+    setIsResult(true);
   };
 
   return (
@@ -39,6 +49,11 @@ export function Calculator() {
           <Button onClick={handleAddNumberText} label="2" />
           <Button onClick={handleAddNumberText} label="3" />
           <Button onClick={handleCalculate} label="=" />
+          <Button
+            onClick={handleAddNumberText}
+            label="0"
+            className="col-span-4"
+          />
         </div>
       </div>
     </div>
