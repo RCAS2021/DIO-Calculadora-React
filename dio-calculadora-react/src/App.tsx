@@ -1,5 +1,13 @@
-function App() {
-  return <h1>Teste</h1>;
-}
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Calculator } from "./pages/calculator";
 
-export default App;
+export function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Calculator />,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
+}
