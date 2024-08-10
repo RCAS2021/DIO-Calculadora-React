@@ -1,3 +1,3 @@
 export function Calculator() {
-  return <div>calculator</div>;
+  return <h1>Calculator</h1>;
 }
