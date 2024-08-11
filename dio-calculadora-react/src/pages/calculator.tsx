@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../components/button";
 import { Input } from "../components/input";
+import { toast } from "sonner";
 
 export function Calculator() {
   const [currentNumber, setCurrentNumber] = useState("0");
@@ -41,18 +42,23 @@ export function Calculator() {
   };
 
   const handleCalculate = () => {
-    let expression = currentNumber.replace(
-      /(\d*\.?\d*)√(\d*\.?\d+)/g,
-      (match, p1, p2) => {
-        const prefix = p1 ? `${p1}*` : ""; // Add multiplication if there's a prefix number
-        return `${prefix}Math.sqrt(${p2})`;
-      }
-    );
-    const result = eval(expression.replace("^", "**"));
-    setCurrentNumber(
-      result === Infinity ? "Can't divide a number by 0" : result.toString()
-    );
-    setIsResult(true);
+    try {
+      let expression = currentNumber.replace(
+        /(\d*\.?\d*)√(\d*\.?\d+)/g,
+        (match, p1, p2) => {
+          const prefix = p1 ? `${p1}*` : ""; // Add multiplication if there's a prefix number
+          return `${prefix}Math.sqrt(${p2})`;
+        }
+      );
+      const result = eval(expression.replace("^", "**"));
+      setCurrentNumber(
+        result === Infinity ? "Can't divide a number by 0" : result.toString()
+      );
+      setIsResult(true);
+    } catch {
+      toast.error("There was an error with the expression, try again!");
+      setCurrentNumber("0");
+    }
   };
 
   return (

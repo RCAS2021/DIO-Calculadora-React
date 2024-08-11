@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Calculator } from "./pages/calculator";
+import { Toaster } from "sonner";
 
 export function App() {
   const router = createBrowserRouter([
@@ -9,5 +10,10 @@ export function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Toaster />
+      <RouterProvider router={router} />
+    </>
+  );
 }
